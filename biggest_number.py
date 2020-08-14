@@ -1,23 +1,36 @@
 answer = ''
 number = "4177252841"
 k = 4
+t_max = 0
 
-while k != 0:
-    if k == 1:
-        if int(number[0]) < int(number[1]):
-            answer += number[1:]
+for idx in range(len(number)):
+    if k > 0:
+        if idx == len(number) - 1:
+            break
         else:
-            answer += (number[0] + number[2:])
-        k = 0
+            current = int(number[idx])
+            next = int(number[idx+1])
+
+            if current > t_max:
+                t_max = current
+                if len(answer) > k:
+                    answer = answer[:-k]
+                    k = 0
+                elif len(answer) == k:
+                    answer = ''
+                    k = 0
+                    pass
+                else:
+                    k -= len(answer)
+                    answer = ''
+                    
+
+            if current >= next:
+                answer += str(current)
+            else:
+                k -= 1
     else:
-        max = 0
-        temp = 0
-        for i in range(k):
-            if int(number[i]) > max:
-                max = int(number[i])
-                temp = i
-        number = number[temp+1:]
-        answer += str(max)
-        k -= temp
+        answer += number[idx:]
+        break
 
 print(answer)
